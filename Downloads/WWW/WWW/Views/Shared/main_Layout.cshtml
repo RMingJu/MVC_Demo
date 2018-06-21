@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag</title>
+    @RenderSection("MyStyle", false)
+
+    <script src="~/Script/jquery-3.3.1.min.js"></script>
+    @RenderSection("MyScript",false)
+</head>
+<body>
+   @Html.Partial("TopBanner")
+   @RenderBody()
+   @Html.Partial("PageFooter")
+</body>
+</html>

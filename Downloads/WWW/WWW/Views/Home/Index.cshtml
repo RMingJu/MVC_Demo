@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "我的首頁";
+    Layout = "~/Views/Shared/main_Layout.cshtml";
+}
+@section MyStyle{
+    <style type="text/css">
+        h1 {
+            text-align:center;
+            font-style:italic;
+            position:relative;
+            top:20px;
+        }
+        #VistCount {
+            text-align:center;
+            font-size:15px;
+        }
+    </style>
+ }
+<h1>我的首頁</h1>
+<p>&nbsp;</p>
+<p id="VistCount">本站累積人數: @Html.Raw(@ViewData["VistCount"])</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+

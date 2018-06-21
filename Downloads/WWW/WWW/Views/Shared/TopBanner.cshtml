@@ -1,0 +1,51 @@
+﻿<style>
+    .Links {
+        font-size:20px;
+        padding:0.5px 50px;
+    }
+    #Topper {
+        width:950px; 
+        background-color:lightgreen; 
+        height:150px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+    #User {
+        position: absolute;
+        top: 0px;
+        left:1000px;
+    }
+
+    #TopperTable {
+        width: 950px;
+    }
+
+</style>
+<div id="Topper">
+    <table id="TopperTable">
+        <tr>
+            <td><img src="~/img/拍賣/商標.png" style="height:100px;width:200px;top:0px;" /></td>
+            <td></td>
+            <td>
+                <div id="User">@{if (Session["LoginName"] == null)
+                    {
+                        <p>旅客，您好</p>
+                    }
+                    else
+                    {
+                        <p>@Session["LoginName"]，您好</p>
+                    }
+                }</div>
+            </td>
+        </tr>
+        <tr>
+            <td><a href="@Url.Action("Index","Home",new {area = "" })" class="Links">我的首頁</a></td>
+            <td><a href="@Url.Action("Index","Login")" class="Links">會員登入</a></td>
+            <td><a href="@Url.Action("Index","Shop")" class="Links">拍賣商城</a></td>
+            <td><a href="@Url.Action("Index","Home",new {area = "Admin" })" class="Links">後臺管理</a></td>
+        </tr>
+    </table>
+
+
+</div>
+

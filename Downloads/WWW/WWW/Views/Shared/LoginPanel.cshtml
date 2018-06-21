@@ -1,0 +1,58 @@
+﻿<style>
+    #LoginForm {
+        width: 400px;
+        border-collapse: collapse;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+        #LoginForm td {
+            padding: 10px;
+        }
+
+    .Header {
+        font-weight:bold;
+        width:120px;
+        text-align:left;
+    }
+    #LoginBtn {
+        width: 120px;
+        height: 30px;
+    }
+
+    #field {
+        width: 500px;
+        height: 250px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+        #field legend {
+            font-size:50px;
+        }
+</style>
+
+<fieldset id="field">
+    <legend>會員登入</legend>
+    <table id="LoginForm">
+        <tr class="Header">
+            <td>帳號:</td>
+            <td><input type="text" id="Acct" name="Acct" /></td>
+        </tr>
+        <tr class="Header">
+            <td >密碼:</td>
+            <td><input type="text" id="Pass" name="Pass" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <span style="text-align:center;color:red;font-weight:bold;">
+                    @ViewData["Msg"]
+                </span>
+            </td>
+        </tr>
+        <tr id="Links">
+            <td class="Header"><a href="@Url.Action("index","Newmember")"> 加入會員</a></td>
+            <td><input id="LoginBtn" type="submit" value="登入" /></td>
+        </tr>
+    </table>
+</fieldset>

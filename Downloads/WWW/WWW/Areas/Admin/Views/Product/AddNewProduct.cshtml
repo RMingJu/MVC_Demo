@@ -1,0 +1,77 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>新增產品</title>
+</head>
+<body>
+    <form action="" method="post" enctype="multipart/form-data">
+        <table>
+            <tr>
+                <td class="TitleLabel">產品編號:</td>
+                <td><input type="text" id="Id" /></td>
+            </tr>
+            <tr>
+                <td class="TitleLabel">產品名稱:</td>
+                <td><input type="text" id="Name" /></td>
+            </tr>
+            <tr>
+                <td class="TitleLabel">供應商:</td>
+                <td>
+                    <select id="StoreID" name="StoreID">
+                        <option>--請選擇--</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="TitleLabel">產品類別</td>
+                <td>
+                    <select id="TypeID" name="TypeID">
+                        <option>--請選擇--</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="TitleLabel">單價:</td>
+                <td><input type="number" id="Price" /></td>
+            </tr>
+            <tr>
+                <td class="TitleLabel">單位數量：</td>
+                <td><input type="text" name="Unit" value="" /></td>
+            </tr>
+            <tr>
+                <td class="TitleLabel">庫存量：</td>
+                <td><input type="number" name="Stock" value="" /></td>
+            </tr>
+            <tr>
+                <td class="TitleLabel">銷售狀況：</td>
+                <td>
+                    <select id="SellOrNot" name="IsSellOrNot">
+                        <option value="0">繼續銷售</option>
+                        <option value="1">不再銷售</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="TitleLabel">產品圖片：</td>
+                <td>
+                    <input id="ProductImage" name="ProductImage" type="file" />
+                </td>
+            </tr>
+            <tr>
+                <td class="TitleLabel">&nbsp;</td>
+                <td>
+                    <input type="submit" value="確定新增" />&nbsp;&nbsp;
+                    <input type="reset" value="重新填寫" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

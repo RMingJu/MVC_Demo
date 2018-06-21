@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "成功加入會員";
+    Layout = "~/Views/Shared/main_Layout.cshtml";
+}
+@section MyStyle
+    {
+        <style>
+            #dd {
+                text-align:center;
+            }
+        </style>
+    
+    }
+<div id="dd">
+    <h2>恭喜你，成功加入會員!</h2>
+    @ViewData["Member"]
+</div>

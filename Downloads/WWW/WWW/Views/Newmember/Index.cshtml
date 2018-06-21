@@ -1,0 +1,251 @@
+﻿
+@{
+    ViewBag.Title = "加入會員";
+    Layout = "~/Views/Shared/main_Layout.cshtml";
+}
+
+@section MyStyle
+    {
+        <style type="text/css">
+            h2 {
+                text-align:center;
+            }
+            .TitleLabel {
+                font-weight: bold;
+                font-size: 14pt;
+                width: 120px;
+                text-align: right;
+            }
+
+            #FormTable {
+                width: 950px;
+                border-collapse: collapse;
+            }
+
+                #FormTable td {
+                    padding: 10px;
+                }
+        </style>
+    }
+
+@section MyScript
+    {
+        <script>
+
+        var address = null;
+
+        $(document).ready(function () {
+
+            //刷新驗證圖
+            $("#ChangeValidImgBtn").click(function ()
+            {
+                //$("#ValidImg").attr("src", "/Tools/GetValidPic?tt=" + new Date().getTime());
+                $("#ValidImg").attr("src", "@Url.Action("GetValidPic","Tools")"+"?tt=" + new Date().getTime());
+
+
+                 $.get("@Url.Action("GetValidAns","Tools")", null, function (xx) {
+                $("#ValidAns").val(xx);
+                }, "text");
+
+            })
+
+
+            //Ajax取得地址
+            $.get("@Url.Action("GetAddressXml","Tools")", null, function (xx) {
+                    address = xx;
+                    LoadCounty();
+            }, "xml");
+
+            $("#County").change(LoadRegion);
+
+            //Ajax取得驗證答案
+            $.get("@Url.Action("GetValidAns","Tools")", null, function (xx) {
+                $("#ValidAns").val(xx);
+            }, "text");
+
+            //檢查帳號是否重複
+            $("#Acct").blur(CheckAccount);
+
+            //額外檢查表單
+            $("#form1").submit(CheckSubmitForm);
+
+        });
+
+        function LoadCounty() {
+            $(address).find("County").each(function () {
+                var vv = $(this).attr("Name");
+                var ss = "<option value='" + vv + "'>" + vv + "</option>"
+                $(ss).appendTo("#County");
+            });
+        }
+
+        function LoadRegion() {
+            $("#Region").empty();
+            $("<option>--請選擇--</option>").appendTo("#Region");
+            var cc = $("#County").val();
+
+            $(address).find("County[Name=\"" + cc + "\"]").children().each(function () {
+                var vv = $(this).attr("Name");
+                var ss = "<option value='" + vv + "'>" + vv + "</option>"
+                $(ss).appendTo("#Region");
+            });
+        }
+
+        //檢查帳號是否重複
+        function CheckAccount() {
+            var vv = $("#Acct").val();
+            if (vv.length == 0) return;
+
+            var pp = $.param({ "acct": vv });
+            $.get("@Url.Action("CheckAccount","Tools")", pp, function (xx) {
+                if (xx == "t") {
+                    $("#CheckAcct").text("帳號已被使用");
+                    $("#CheckAcct").css("color", "red");
+                }
+                else {
+                    $("#CheckAcct").text("帳號可以使用");
+                    $("#CheckAcct").css("color", "blue");
+                }
+            }, "text");
+
+        }
+
+        //檢驗填寫表單
+        function CheckSubmitForm() {
+
+            var msg = "";
+
+            if ($("#Pass").val() != $("#ConfirmPass").val())
+                msg += "* 兩次輸入的密碼需相符！\n";
+
+            var vv = $("input[name='Gender']:checked").val();
+            if (vv == null || vv.length == 0)
+                msg += "* 請選擇性別！\n";
+
+            if ($("#Edu").val() == "--請選擇--")
+                msg += "* 請選擇教育程度！\n";
+
+            if ($("#ValidAns").val().toLowerCase() != $("#ValidAnsInput").val().toLowerCase()) {
+                msg += "* 驗證碼有誤！\n";
+            }
+
+
+            if (msg.length > 0) {
+                alert(msg);
+                return false;
+            } else {
+                return true;
+            }
+
+        }
+
+        </script>
+    }
+
+<h2>填寫會員資料</h2>
+<form id="Form1" method="post" action="@Url.Action("AddNewMember")">
+    <table id="FormTable">
+        <tr>
+            <td class="TitleLabel">
+                帳號：
+            </td>
+            <td style="width:300px;">
+                <input id="Acct" name="Acct" type="text" required="required" />&nbsp;&nbsp;
+                <span id="CheckAcct"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="TitleLabel">
+                密碼：
+            </td>
+            <td><input id="Pass" name="Pass" type="password" required="required" /><span id="Span2"></span></td>
+        </tr>
+        <tr>
+            <td class="TitleLabel">
+                確認密碼：
+            </td>
+            <td><input id="ConfirmPass" type="password" required="required" /><span id="Span3"></span></td>
+        </tr>
+        <tr>
+            <td class="TitleLabel">
+                姓：
+            </td>
+            <td><input id="LastName" name="LastName" type="text" required="required" /></td>
+        </tr>
+        <tr>
+            <td class="TitleLabel">
+                名：
+            </td>
+            <td><input id="FirstName" name="FirstName" type="text" required="required" /></td>
+        </tr>
+        <tr>
+            <td class="TitleLabel">
+                性別：
+            </td>
+            <td>
+                <input id="Radio1" name="Gender" type="radio" value="1" />男&nbsp;&nbsp;
+                <input id="Radio2" name="Gender" type="radio" value="0" />女
+            </td>
+        </tr>
+        <tr>
+            <td class="TitleLabel">
+                生日：
+            </td>
+            <td><input id="Text6" name="Birth" type="date" required="required" />(yyyy/mm/dd)</td>
+        </tr>
+        <tr>
+            <td class="TitleLabel">
+                地址：
+            </td>
+            <td style=" line-height:24pt;">
+                <b>縣市：</b><select id="County" name="County">
+                    <option>--請選擇--</option>
+                </select>&nbsp;&nbsp;<b>鄉鎮市：</b><select id="Region" name="Region">
+                    <option>--請選擇--</option>
+                </select>&nbsp;<br />
+                <b>地址：</b><input id="Address" name="Address" type="text" required="required" />
+            </td>
+        </tr>
+        <tr>
+            <td class="TitleLabel">
+                學歷：
+            </td>
+            <td>
+                &nbsp;
+                <select id="Edu" name="Edu">
+                    <option>--請選擇--</option>
+                    <option value="小學">小學</option>
+                    <option value="國中">國中</option>
+                    <option value="高中職">高中職</option>
+                    <option value="大專">大專</option>
+                    <option value="研究所">研究所</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="TitleLabel">
+                電子郵件：
+            </td>
+            <td><input id="EMail" name="EMail" style="width: 300px" type="text" required="required" /></td>
+        </tr>
+        <tr>
+            <td class="TitleLabel" style="vertical-align:top;">
+                驗證碼：
+            </td>
+            <td>
+                <img id="ValidImg" src="@Url.Action("GetValidPic","Tools")" /><br />
+                <input id="ChangeValidImgBtn" type="button" value="再換一張" /><input id="ValidAns" /><br />
+                <input type="text" required="required" id="ValidAnsInput"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="TitleLabel">
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;&nbsp;<input id="Submit2" type="submit" value="加入會員" />
+                <input id="Reset2" type="reset" value="重填" />
+            </td>
+        </tr>
+    </table>
+</form>

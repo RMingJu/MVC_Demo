@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "會員登入";
+    Layout = "~/Views/Shared/main_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>會員登入</title>
+</head>
+<body>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <form method="post" action="@Url.Action("ValidLoginProcess","Login")">
+        @Html.Partial("LoginPanel")
+    </form>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+</body>
+</html>
